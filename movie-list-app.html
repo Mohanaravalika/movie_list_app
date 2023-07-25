@@ -1,0 +1,129 @@
+<html>
+<head>
+<script>
+function loadPresidents() {
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+       
+    if (this.readyState === 4 && this.status === 200) {
+	const divelement=document.getElementById('load-id');
+	divelement.setAttribute("class", "loader");
+	var data = this.responseText;
+        var jsonResponse = JSON.parse(data)["results"];
+        console.log(jsonResponse["results"]);
+        var table = document.createElement('table');
+        table.setAttribute('original_title', 'original_language', 'vote_average');
+        var properties = ['original_title', 'original_language', 'vote_average'];
+        var capitalize = function(s) {
+            return s.charAt(0).toUpperCase() + s.slice(1);
+        }
+        var tr = document.createElement('tr');
+        for (var i = 0; i < properties.length; i++) {
+            var th = document.createElement('th');
+            th.appendChild(document.createTextNode(capitalize(properties[i])));
+            tr.appendChild(th);
+        }
+        table.appendChild(tr);                                                                
+        var tr, row;
+        for (var r = 0; r < jsonResponse.length; r++) {
+            tr = document.createElement('tr');
+            row = jsonResponse[r];
+			var org_lang=row['original_language'];
+			var optiondata=document.getElementById("languages");
+			optiondata.options[optiondata.options.length]=new Option(org_lang, org_lang);
+			
+            for (var i = 0; i < properties.length; i++) {
+                var td = document.createElement('td');
+                td.appendChild(document.createTextNode(row[properties[i]]));
+                tr.appendChild(td);
+            }
+            table.appendChild(tr);
+        }
+        document.getElementById('table-id').appendChild(table);
+				document.getElementById('load-id').remove();
+
+    }
+};
+xhttp.open("GET", "https://api.themoviedb.org/3/movie/upcoming?api_key=81f382d33088c6d52099a62eab51d967&language=en-US&page=1", true);
+xhttp.send();
+}
+window.onload = loadPresidents();
+</script>
+<h1 style=text-align:center>Movie Listing App</h1>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  }
+td {
+   text-align:center;
+   }
+button 
+   {
+   background-color:#AED6F1;
+   }
+th
+   {
+   background-color:Bisque;
+   }
+div
+   {
+   border:2px solid;
+   padding-left: 20px;
+   padding-bottom: 20px;
+   margin-right: 50px;
+   }
+.loader {
+margin: auto;
+ border: 20px solid #EAF0F6;
+ border-radius: 50%;
+ border-top: 20px solid #FF7A59;
+ width: 200px;
+ height: 200px;
+ animation: spinner 4s linear infinite;
+ }
+ @keyframes spinner {
+ 0% { transform: rotate(0deg); }
+ 100% { transform: rotate(360deg); }
+ }
+</style>
+</head>
+<div>
+<body>
+<h1>
+<h2>Movie Search</h2>
+<div id="load-id"></div>
+<table>
+<tr>
+<td>Title: <input type="text" id="title"></td>
+<td><label for="languages">Language: </label>
+  <select name="languages" id="languages">
+  </select>
+</td>
+<td><button>SEARCH(1)</button></td>
+</tr>
+</table><br>
+<h2>Search History</h2>
+<table style="width:30%">
+<tr>
+<td>1</td>
+<td>abc/language</td>
+<td style=background-color:#AED6F1>Delete(2)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td style=background-color:#AED6F1>Delete(2)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>...</td>
+<td style=background-color:#AED6F1>Delete(2)</td>
+</tr>
+<tr>
+<td style=background-color:#AED6F1 colspan="3">DELETE SEARCH HISTORY(3)</td>
+</tr>
+</table><br>
+<div id="table-id" style="border-color:white; padding-left:1px"></div>
+</body>
+</html>
