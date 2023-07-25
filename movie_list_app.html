@@ -48,6 +48,11 @@ xhttp.open("GET", "https://api.themoviedb.org/3/movie/upcoming?api_key=81f382d33
 xhttp.send();
 }
 window.onload = loadPresidents();
+function search() {
+window.alert("button clicked");
+var inputelement=document.getElementById("title");
+console.log(inputelement.value);
+}
 </script>
 <h1 style=text-align:center>Movie Listing App</h1>
 <style>
@@ -100,7 +105,7 @@ margin: auto;
   <select name="languages" id="languages">
   </select>
 </td>
-<td><button>SEARCH(1)</button></td>
+<td><button type="button" onclick="search()">SEARCH</button></td>
 </tr>
 </table><br>
 <h2>Search History</h2>
