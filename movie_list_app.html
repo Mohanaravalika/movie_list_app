@@ -1,7 +1,9 @@
 <html>
 <head>
 <script>
-function loadPresidents() {
+var movieJsonArr = [];
+
+function loadMovies() {
 var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
        
@@ -10,6 +12,7 @@ xhttp.onreadystatechange = function() {
 	divelement.setAttribute("class", "loader");
 	var data = this.responseText;
         var jsonResponse = JSON.parse(data)["results"];
+		movieJsonArr = jsonResponse;
         console.log(jsonResponse["results"]);
         var table = document.createElement('table');
         table.setAttribute('original_title', 'original_language', 'vote_average');
@@ -47,11 +50,37 @@ xhttp.onreadystatechange = function() {
 xhttp.open("GET", "https://api.themoviedb.org/3/movie/upcoming?api_key=81f382d33088c6d52099a62eab51d967&language=en-US&page=1", true);
 xhttp.send();
 }
-window.onload = loadPresidents();
+window.onload = loadMovies();
 function search() {
-window.alert("button clicked");
 var inputelement=document.getElementById("title");
-console.log(inputelement.value);
+for(i=0;i<movieJsonArr.length;i++){
+  if(inputelement.value == movieJsonArr[i]['original_title']) {
+   var title = inputelement.value;
+   var lang =  movieJsonArr[i]['original_language'];
+   
+	var tr = document.createElement('tr');
+	var td1 = document.createElement('td');
+	td1.appendChild(document.createTextNode(1));
+	            tr.appendChild(td1);
+					var td2 = document.createElement('td');
+		td2.appendChild(document.createTextNode(title));
+		            tr.appendChild(td2);
+						var td3 = document.createElement('td');
+					var btn = document.createElement('button');
+					btn.innerHTML = "DELETE";
+			td3.appendChild(btn);
+            tr.appendChild(td3);
+			btn.onclick = function( ){ console.log('Clicking on the delete button');
+			                        
+									  };  		
+	document.getElementById("historyTable").appendChild(tr)
+   break;
+   
+  } else {
+  console.log("no data found");
+  }
+}
+
 }
 </script>
 <h1 style=text-align:center>Movie Listing App</h1>
@@ -92,6 +121,7 @@ margin: auto;
  100% { transform: rotate(360deg); }
  }
 </style>
+
 </head>
 <div>
 <body>
@@ -109,25 +139,7 @@ margin: auto;
 </tr>
 </table><br>
 <h2>Search History</h2>
-<table style="width:30%">
-<tr>
-<td>1</td>
-<td>abc/language</td>
-<td style=background-color:#AED6F1>Delete(2)</td>
-</tr>
-<tr>
-<td>2</td>
-<td>...</td>
-<td style=background-color:#AED6F1>Delete(2)</td>
-</tr>
-<tr>
-<td>3</td>
-<td>...</td>
-<td style=background-color:#AED6F1>Delete(2)</td>
-</tr>
-<tr>
-<td style=background-color:#AED6F1 colspan="3">DELETE SEARCH HISTORY(3)</td>
-</tr>
+<table id="historyTable" style="width:30%">
 </table><br>
 <div id="table-id" style="border-color:white; padding-left:1px"></div>
 </body>
