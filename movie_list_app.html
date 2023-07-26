@@ -70,8 +70,8 @@ for(i=0;i<movieJsonArr.length;i++){
 					btn.innerHTML = "DELETE";
 			td3.appendChild(btn);
             tr.appendChild(td3);
-			btn.onclick = function( ){ console.log('Clicking on the delete button');
-			                        
+			btn.onclick = function(r){ 
+			                        document.getElementById('historyTable').deleteRow(i);
 									  };  		
 	document.getElementById("historyTable").appendChild(tr)
    break;
