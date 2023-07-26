@@ -1,0 +1,35 @@
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  }
+td {
+   text-align:center;
+   }
+button 
+   {
+   background-color:#AED6F1;
+   }
+th
+   {
+   background-color:Bisque;
+   }
+div
+   {
+   border:2px solid;
+   padding-left: 20px;
+   padding-bottom: 20px;
+   margin-right: 50px;
+   }
+.loader {
+margin: auto;
+ border: 20px solid #EAF0F6;
+ border-radius: 50%;
+ border-top: 20px solid #FF7A59;
+ width: 200px;
+ height: 200px;
+ animation: spinner 4s linear infinite;
+ }
+ @keyframes spinner {
+ 0% { transform: rotate(0deg); }
+ 100% { transform: rotate(360deg); }
+ }
